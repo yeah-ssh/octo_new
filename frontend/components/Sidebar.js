@@ -4,9 +4,9 @@ import {
   ChartBarIcon,
   UserIcon,
   ArrowLeftOnRectangleIcon,
-  PlusIcon,
   FireIcon,
   CurrencyDollarIcon,
+  ChatBubbleLeftRightIcon, // 🧠 New icon for Chatbot
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import SidebarIcon from "./SidebarIcon";
@@ -14,10 +14,9 @@ import logo from "../assets/img/octo_logo.png";
 import CryptoSwapModal from "./swapModal";
 
 const Sidebar = ({ signOut }) => {
-  const [active, setActive] = useState(false);
   const [coins, setCoins] = useState(10);
-
   const router = useRouter();
+
   return (
     <div className="w-64 bg-[#0f0f0f] h-screen sticky top-0 flex flex-col">
       {/* Logo */}
@@ -31,52 +30,60 @@ const Sidebar = ({ signOut }) => {
           Octo
         </h3>
       </div>
-      {/* Icons */}
+
+      {/* Sidebar Icons */}
       <SidebarIcon
-        active={true}
+        active={router.pathname === "/"}
         label="Home"
         onClickHandler={() => router.replace("/")}
         Icon={<HomeIcon className="h-8 w-8" />}
       />
       <SidebarIcon
-        active={false}
+        active={router.pathname === "/statistics"}
         label="Statistics"
         onClickHandler={() => router.push("/statistics")}
         Icon={<ChartBarIcon className="h-8 w-8" />}
       />
       <SidebarIcon
-        active={false}
+        active={router.pathname === "/profile"}
+        label="Profile"
         onClickHandler={() => router.push("/profile")}
         Icon={<UserIcon className="h-8 w-8" />}
-        label="Profile"
       />
       <SidebarIcon
-        active={false}
+        active={router.pathname === "/explore"}
+        label="Explore all"
         onClickHandler={() => router.push("/explore")}
         Icon={<UserIcon className="h-8 w-8" />}
-        label="Explore all"
       />
+
+      {/* ✅ Chatbot Tab */}
+      <SidebarIcon
+        active={router.pathname === "/chatbot"}
+        label="Chatbot"
+        onClickHandler={() => router.push("/chatbot")}
+        Icon={<ChatBubbleLeftRightIcon className="h-8 w-8" />}
+      />
+
+      {/* CryptoSwap */}
+      <CryptoSwapModal />
+
+      {/* Coins and Streak */}
+
       {/* <SidebarIcon
         active={false}
         onClickHandler={() => router.push("/exercise/selection")}
         cta={true}
         Icon={<PlusIcon className="h-8 w-8" />}
       /> */}
-      
-      <button
-        type="button"
-        className={
-          "flex items-center hover:rounded-md rounded-xl space-x-4 hover:bg-[#0a0a0b] text-orange-500 justify-start hover:cursor-pointer transition-all duration-200 px-3 py-2 m-4 mt-auto"
-        }
-      >
-      </button>
+
+      {/* Logout */}
       <SidebarIcon
         onClickHandler={signOut}
         active={false}
         label="Logout"
         Icon={<ArrowLeftOnRectangleIcon className="h-8 w-8" />}
       />
-      {/* <button onClick={signOut}>Sign out</button> */}
     </div>
   );
 };
